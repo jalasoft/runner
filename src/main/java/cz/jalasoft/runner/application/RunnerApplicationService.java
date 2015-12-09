@@ -1,7 +1,7 @@
 package cz.jalasoft.runner.application;
 
-import cz.jalasoft.runner.domain.model.Distance;
-import cz.jalasoft.runner.domain.model.Run;
+import cz.jalasoft.runner.domain.model.run.Distance;
+import cz.jalasoft.runner.domain.model.run.Run;
 
 import java.time.Duration;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.domain.model;
+package cz.jalasoft.runner.domain.model.run;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -6,7 +6,7 @@ package cz.jalasoft.runner.domain.model;
  */
 public final class Distance {
 
-    public static Distance ofKilemeters(int kilemeters) {
+    public static Distance ofKilometers(int kilemeters) {
         return new Distance(kilemeters, DistanceUnit.KM);
     }
 
