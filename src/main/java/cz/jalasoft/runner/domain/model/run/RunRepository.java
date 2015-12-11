@@ -2,6 +2,7 @@ package cz.jalasoft.runner.domain.model.run;
 
 import cz.jalasoft.runner.domain.model.runner.RunnerId;
 
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -17,7 +18,7 @@ public interface RunRepository {
 
     void add(Run run);
 
-    Iterable<Run> in(RunnerId runnerId, TimeSpan timeSpan);
+    Collection<Run> in(RunnerId runnerId, TimeSpan timeSpan);
 
-    Iterable<Run> all(RunnerId runnerId);
+    Collection<Run> all(RunnerId runnerId);
 }
