@@ -16,11 +16,12 @@ public class Runner extends DomainEntity {
 
     private RunnerId id;
 
+    private String nick;
     private String name;
     private String surname;
     private LocalDate birthday;
 
-    public Runner(RunnerId id, String name, String surname, LocalDate birthday) {
+    public Runner(RunnerId id, String nick, String name, String surname, LocalDate birthday) {
         setId(id);
         setName(name);
         setSurname(surname);
@@ -38,38 +39,54 @@ public class Runner extends DomainEntity {
         this.id = id;
     }
 
+    private void setNick(String nick) {
+        if (nick == null) {
+            throw new IllegalArgumentException("Nickname of a runner must not be null.");
+        }
+
+        if (nick.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nickname of a runner must not be empty.");
+        }
+
+        this.nick = nick;
+    }
+
     private void setName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Name must not be null.");
+            throw new IllegalArgumentException("Name of a runner must not be null.");
         }
         if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name must not be empty.");
+            throw new IllegalArgumentException("Name of a runner must not be empty.");
         }
         this.name = name.trim();
     }
 
     private void setSurname(String surname) {
         if (surname == null) {
-            throw new IllegalArgumentException("Surname must not be null.");
+            throw new IllegalArgumentException("Surname of a runner must not be null.");
         }
         if (surname.trim().isEmpty()) {
-            throw new IllegalArgumentException("Surname must not be empty.");
+            throw new IllegalArgumentException("Surname of a runner must not be empty.");
         }
         this.surname = surname.trim();
     }
 
     private void setBirthday(LocalDate birthday) {
         if (birthday == null) {
-            throw new IllegalArgumentException("Birthday must not be null.");
+            throw new IllegalArgumentException("Birthday of a runner must not be null.");
         }
         if (now().isBefore(birthday)) {
-            throw new IllegalArgumentException("Birthday must be past date,");
+            throw new IllegalArgumentException("Birthday of a runner must be past date,");
         }
         this.birthday = birthday;
     }
 
     public RunnerId id() {
         return id;
+    }
+
+    public String nick() {
+        return nick;
     }
 
     public String name() {

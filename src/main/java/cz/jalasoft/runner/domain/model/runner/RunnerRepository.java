@@ -1,6 +1,5 @@
 package cz.jalasoft.runner.domain.model.runner;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -11,16 +10,15 @@ import java.util.UUID;
 public interface RunnerRepository {
 
     default RunnerId nextIdentity() {
-        String uuid = UUID.randomUUID().toString();
-        return new RunnerId(uuid);
+        UUID randomUUID = UUID.randomUUID();
+        return new RunnerId(randomUUID.toString());
     }
 
-    Runner createRunner(String name, String surname, LocalDate birthdate);
+    void add(Runner runner);
 
+    void remove(RunnerId runnerId);
 
-    void addRunner(Runner runner);
-
-    Runner ofId(RunnerId id);
+    Runner ofNickname(String nickname);
 
     Collection<Runner> all();
 }

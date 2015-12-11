@@ -1,6 +1,8 @@
 package cz.jalasoft.runner.domain.model.run;
 
-import java.time.Duration;
+import cz.jalasoft.runner.domain.model.runner.RunnerId;
+
+import java.util.UUID;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -8,11 +10,14 @@ import java.time.Duration;
  */
 public interface RunRepository {
 
-    RunId nextId();
+    default RunId nextId() {
+        UUID randonUUID = UUID.randomUUID();
+        return new RunId(randonUUID.toString());
+    }
 
     void add(Run run);
 
-    Iterable<Run> last(Duration duration);
+    Iterable<Run> in(RunnerId runnerId, TimeSpan timeSpan);
 
-    Iterable<Run> all();
+    Iterable<Run> all(RunnerId runnerId);
 }
