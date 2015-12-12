@@ -6,13 +6,13 @@ package cz.jalasoft.runner.domain.model;
  */
 public abstract class DomainEntity {
 
-    private String id;
+    private String persistenceId;
 
-    protected final String getId() {
-        return id;
+    private String getPersistenceId() {
+        return persistenceId;
     }
 
-    protected final void setId(String id) {
-        this.id = id;
+    private void setPersistenceId(String persistenceId) {
+        this.persistenceId = persistenceId;
     }
 }

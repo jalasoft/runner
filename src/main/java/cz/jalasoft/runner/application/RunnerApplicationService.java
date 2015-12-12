@@ -28,12 +28,12 @@ public class RunnerApplicationService {
         this.statisticsService = statisticsService;
     }
 
-    public void registerRunner(String nickname, String name, String surname, LocalDate birthday) throws NoSuchRunnerException {
+    public void registerRunner(String nickname, String name, String surname, LocalDate birthday) throws RunnerAlreadyExistsException {
 
         Runner existingRunner = runnerRepository.ofNickname(nickname);
 
         if (existingRunner != null) {
-            throw new NoSuchRunnerException(nickname);
+            throw new RunnerAlreadyExistsException(nickname);
         }
 
         RunnerId runnerId = runnerRepository.nextIdentity();

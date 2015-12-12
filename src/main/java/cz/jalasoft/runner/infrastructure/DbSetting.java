@@ -1,11 +1,13 @@
 package cz.jalasoft.runner.infrastructure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 12/11/15.
  */
+@Component
 @ConfigurationProperties(prefix = "hibernate.jdbc")
 public class DbSetting {
 

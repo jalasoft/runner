@@ -16,15 +16,14 @@ public class Runner extends DomainEntity {
 
     private RunnerId id;
 
-    private String nick;
-    private String name;
-    private String surname;
+    private String nickname;
+    private Name name;
     private LocalDate birthday;
 
-    public Runner(RunnerId id, String nick, String name, String surname, LocalDate birthday) {
+    public Runner(RunnerId id, String nickname, String firstName, String lastName, LocalDate birthday) {
         setId(id);
-        setName(name);
-        setSurname(surname);
+        setNickname(nickname);
+        setName(firstName, lastName);
         setBirthday(birthday);
     }
 
@@ -39,36 +38,28 @@ public class Runner extends DomainEntity {
         this.id = id;
     }
 
-    private void setNick(String nick) {
-        if (nick == null) {
+    private RunnerId getId() {
+        return id;
+    }
+
+    private void setNickname(String nickname) {
+        if (nickname == null) {
             throw new IllegalArgumentException("Nickname of a runner must not be null.");
         }
 
-        if (nick.trim().isEmpty()) {
+        if (nickname.trim().isEmpty()) {
             throw new IllegalArgumentException("Nickname of a runner must not be empty.");
         }
 
-        this.nick = nick;
+        this.nickname = nickname;
     }
 
-    private void setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Name of a runner must not be null.");
-        }
-        if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name of a runner must not be empty.");
-        }
-        this.name = name.trim();
+    private String getNickname() {
+        return nickname;
     }
 
-    private void setSurname(String surname) {
-        if (surname == null) {
-            throw new IllegalArgumentException("Surname of a runner must not be null.");
-        }
-        if (surname.trim().isEmpty()) {
-            throw new IllegalArgumentException("Surname of a runner must not be empty.");
-        }
-        this.surname = surname.trim();
+    private void setName(String firstName, String lastName) {
+        this.name = new Name(firstName, lastName);
     }
 
     private void setBirthday(LocalDate birthday) {
@@ -85,16 +76,12 @@ public class Runner extends DomainEntity {
         return id;
     }
 
-    public String nick() {
-        return nick;
+    public String nickname() {
+        return nickname;
     }
 
-    public String name() {
+    public Name name() {
         return name;
-    }
-
-    public String surname() {
-        return surname;
     }
 
     public LocalDate birthday() {
@@ -131,10 +118,9 @@ public class Runner extends DomainEntity {
     @Override
     public String toString() {
         return new StringBuilder("Runner[")
-                .append("name:")
                 .append(name())
-                .append(",surname:")
-                .append(surname())
+                .append(",birthday=")
+                .append(birthday())
                 .append("]")
                 .toString();
     }

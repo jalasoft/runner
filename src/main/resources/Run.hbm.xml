@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+  
+<hibernate-mapping package="cz.jalasoft.runner.domain.model.run">
+    <class name="Run" table="run">
+        <id name="persistenceId" column="id">
+            <generator class="native"/>
+        </id>
+        <component name="id" class="RunId">
+            <property name="id" column="domain_id" access="field"/>
+        </component>
+        <component name="runnerId" class="cz.jalasoft.runner.domain.model.runner.RunnerId">
+            <property name="id" column="runner_id" access="field"/>
+        </component>
+        <property name="date" column="date"/>
+        <component name="distance" class="Distance">
+            <property name="value" column="distance_value"/>
+            <property name="unit" column="distance_unit"/>
+        </component>
+        <property name="duration" column="duration"/>
+    </class>
+</hibernate-mapping>
+        

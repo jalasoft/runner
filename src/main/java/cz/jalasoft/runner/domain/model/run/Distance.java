@@ -10,12 +10,32 @@ public final class Distance {
         return new Distance(kilemeters, DistanceUnit.KM);
     }
 
-    private final int value;
-    private final DistanceUnit unit;
+    private int value;
+    private DistanceUnit unit;
 
     Distance(int value, DistanceUnit unit) {
         this.value = value;
         this.unit = unit;
+    }
+
+    protected Distance() {
+
+    }
+
+    private int getValue() {
+        return value;
+    }
+
+    private void setValue(int value) {
+        this.value = value;
+    }
+
+    private String getUnit() {
+        return unit.toString();
+    }
+
+    public void setUnit(String unit) {
+        this.unit = DistanceUnit.valueOf(unit);
     }
 
     public int value() {

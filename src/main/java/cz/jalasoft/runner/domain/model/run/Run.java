@@ -30,7 +30,7 @@ public final class Run extends DomainEntity {
     }
 
     //---------------------------------------------------------------------
-    //SETTERS
+    //GETTERS AND SETTERS
     //---------------------------------------------------------------------
 
     private void setId(RunId id) {
@@ -40,11 +40,19 @@ public final class Run extends DomainEntity {
         this.id = id;
     }
 
+    private RunId getId() {
+        return id;
+    }
+
     private void setRunnerId(RunnerId runnerId) {
         if (runnerId == null) {
             throw new IllegalArgumentException("RunnerId must not be null");
         }
         this.runnerId = runnerId;
+    }
+
+    private RunnerId getRunnerId() {
+        return runnerId;
     }
 
     private void setDate(LocalDate date) {
@@ -58,6 +66,10 @@ public final class Run extends DomainEntity {
         this.date = date;
     }
 
+    private LocalDate getDate() {
+        return date;
+    }
+
     private void setDistance(Distance distance) {
         if (distance == null) {
             throw new IllegalArgumentException("Distance of a run must not be null.");
@@ -65,11 +77,19 @@ public final class Run extends DomainEntity {
         this.distance = distance;
     }
 
+    private Distance getDistance() {
+        return distance;
+    }
+
     private void setDuration(Duration duration) {
         if (duration == null) {
             throw new IllegalArgumentException("Duration of a run must not be null.");
         }
         this.duration = duration;
+    }
+
+    private Duration getDuration() {
+        return duration;
     }
 
     //---------------------------------------------------------------------

@@ -37,4 +37,9 @@ public class Config {
         SessionFactory sessionFactory = metadata.buildSessionFactory();
         return sessionFactory;
     }
+
+    @Bean
+    public SessionProvider sessionProvider() {
+        return new SessionProvider();
+    }
 }

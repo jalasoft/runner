@@ -6,10 +6,14 @@ package cz.jalasoft.runner.domain.model.runner;
  */
 public final class RunnerId {
 
-    private final String id;
+    private String id;
 
     RunnerId(String id) {
         this.id = id;
+    }
+
+    protected RunnerId() {
+
     }
 
     @Override
