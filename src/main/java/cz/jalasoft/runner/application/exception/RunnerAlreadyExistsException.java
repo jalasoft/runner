@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.application;
+package cz.jalasoft.runner.application.exception;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)

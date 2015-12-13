@@ -1,5 +1,7 @@
-package cz.jalasoft.runner.infrastructure;
+package cz.jalasoft.runner.infrastructure.config;
 
+import cz.jalasoft.runner.domain.model.service.RunningStatisticsService;
+import cz.jalasoft.runner.infrastructure.SessionProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -41,5 +43,10 @@ public class Config {
     @Bean
     public SessionProvider sessionProvider() {
         return new SessionProvider();
+    }
+
+    @Bean
+    public RunningStatisticsService runningStatisticsService() {
+        return new RunningStatisticsService();
     }
 }

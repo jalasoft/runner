@@ -1,11 +1,15 @@
 package cz.jalasoft.runner.application;
 
+import cz.jalasoft.runner.application.exception.NoSuchRunnerException;
+import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
 import cz.jalasoft.runner.domain.model.run.*;
 import cz.jalasoft.runner.domain.model.runner.Runner;
 import cz.jalasoft.runner.domain.model.runner.RunnerId;
 import cz.jalasoft.runner.domain.model.runner.RunnerRepository;
 import cz.jalasoft.runner.domain.model.service.RunningStatistics;
 import cz.jalasoft.runner.domain.model.service.RunningStatisticsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -15,20 +19,21 @@ import java.util.Collection;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 12/5/15.
  */
+@Component
 public class RunnerApplicationService {
-
 
     private RunnerRepository runnerRepository;
     private RunRepository runRepository;
     private RunningStatisticsService statisticsService;
 
+    @Autowired
     public RunnerApplicationService(RunnerRepository runnerRepository, RunRepository runRepository, RunningStatisticsService statisticsService) {
         this.runnerRepository = runnerRepository;
         this.runRepository = runRepository;
         this.statisticsService = statisticsService;
     }
 
-    public void registerRunner(String nickname, String name, String surname, LocalDate birthday) throws RunnerAlreadyExistsException {
+    public Runner registerRunner(String nickname, String name, String surname, LocalDate birthday) throws RunnerAlreadyExistsException {
 
         Runner existingRunner = runnerRepository.ofNickname(nickname);
 
@@ -39,6 +44,8 @@ public class RunnerApplicationService {
         RunnerId runnerId = runnerRepository.nextIdentity();
         Runner runner = new Runner(runnerId, nickname, name, surname, birthday);
         runnerRepository.add(runner);
+
+        return runner;
     }
 
     public void unregistersRunner(String nickname) throws NoSuchRunnerException {

@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.infrastructure;
+package cz.jalasoft.runner.infrastructure.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

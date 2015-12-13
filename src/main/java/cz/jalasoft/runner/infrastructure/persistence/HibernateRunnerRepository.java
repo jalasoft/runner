@@ -33,7 +33,7 @@ public class HibernateRunnerRepository implements RunnerRepository {
 
     @Override
     public Runner ofNickname(String nickname) {
-        Query query = sessionProvider.session().createQuery("from cz.jalasoft.runner.domain.model.runner.Runner as r where r.nickname = '?'");
+        Query query = sessionProvider.session().createQuery("from cz.jalasoft.runner.domain.model.runner.Runner as r where r.nickname = ?");
 
         query.setParameter(0, nickname);
         Runner result = (Runner) query.uniqueResult();

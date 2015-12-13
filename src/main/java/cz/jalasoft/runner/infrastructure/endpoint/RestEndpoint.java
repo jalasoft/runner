@@ -1,6 +1,6 @@
 package cz.jalasoft.runner.infrastructure.endpoint;
 
-import cz.jalasoft.runner.application.RunnerAlreadyExistsException;
+import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
 import cz.jalasoft.runner.application.RunnerApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
