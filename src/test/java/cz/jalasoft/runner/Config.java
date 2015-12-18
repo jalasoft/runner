@@ -1,6 +1,6 @@
 package cz.jalasoft.runner;
 
-import cz.jalasoft.runner.infrastructure.config.DbSetting;
+import cz.jalasoft.runner.configuration.DatabaseSetting;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,18 +16,19 @@ import org.springframework.context.annotation.FilterType;
         },
         excludeFilters = {
                 @ComponentScan.Filter(pattern = "cz\\.jalasoft\\.runner\\.infrastructure\\.endpoint\\..*", type = FilterType.REGEX),
-                @ComponentScan.Filter(value = Main.class, type = FilterType.ASSIGNABLE_TYPE)
+                @ComponentScan.Filter(value = Main.class, type = FilterType.ASSIGNABLE_TYPE),
+                @ComponentScan.Filter(value = DatabaseSetting.class, type = FilterType.ASSIGNABLE_TYPE)
         }
 )
 @Configuration
-public class Config extends cz.jalasoft.runner.infrastructure.config.Config {
+public class Config extends cz.jalasoft.runner.configuration.Config {
 
         @Bean
-        public DbSetting dbSetting() {
-                DbSetting setting = new DbSetting();
+        public DatabaseSetting dbSetting() {
+                DatabaseSetting setting = new DatabaseSetting();
 
                 setting.setDriver("org.h2.Driver");
-                setting.setUrl("jdbc:h2:mem:test");
+                setting.setUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
                 setting.setUsername("");
                 setting.setPassword("");
                 setting.setPoolSize(4);

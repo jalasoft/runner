@@ -1,7 +1,6 @@
 package cz.jalasoft.runner.domain.model.service;
 
 import cz.jalasoft.runner.domain.model.run.TimeSpan;
-import cz.jalasoft.runner.domain.model.runner.RunnerId;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -9,7 +8,7 @@ import cz.jalasoft.runner.domain.model.runner.RunnerId;
  */
 public class RunningStatisticsService {
 
-    public RunningStatistics statistics(RunnerId runner, TimeSpan timeSpan) {
+    public RunningStatistics statistics(String nickname, TimeSpan timeSpan) {
 
         return null;
     }

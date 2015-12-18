@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.infrastructure.config;
+package cz.jalasoft.runner.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "hibernate.jdbc")
-public class DbSetting {
+public class DatabaseSetting {
 
     private String driver;
     private String url;

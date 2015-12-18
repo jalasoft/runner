@@ -4,7 +4,6 @@ import cz.jalasoft.runner.application.exception.NoSuchRunnerException;
 import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
 import cz.jalasoft.runner.domain.model.run.*;
 import cz.jalasoft.runner.domain.model.runner.Runner;
-import cz.jalasoft.runner.domain.model.runner.RunnerId;
 import cz.jalasoft.runner.domain.model.runner.RunnerRepository;
 import cz.jalasoft.runner.domain.model.service.RunningStatistics;
 import cz.jalasoft.runner.domain.model.service.RunningStatisticsService;
@@ -35,62 +34,50 @@ public class RunnerApplicationService {
 
     public Runner registerRunner(String nickname, String name, String surname, LocalDate birthday) throws RunnerAlreadyExistsException {
 
-        Runner existingRunner = runnerRepository.ofNickname(nickname);
-
-        if (existingRunner != null) {
+        if (runnerRepository.has(nickname)) {
             throw new RunnerAlreadyExistsException(nickname);
         }
 
-        RunnerId runnerId = runnerRepository.nextIdentity();
-        Runner runner = new Runner(runnerId, nickname, name, surname, birthday);
+        Runner runner = new Runner(nickname, name, surname, birthday);
         runnerRepository.add(runner);
 
         return runner;
     }
 
     public void unregistersRunner(String nickname) throws NoSuchRunnerException {
-        Runner existingRunner = runnerRepository.ofNickname(nickname);
-
-        if (existingRunner == null) {
+        if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
         }
 
-        runnerRepository.remove(existingRunner.id());
+        runnerRepository.remove(nickname);
     }
 
     public Collection<Run> getRuns(String nickname) throws NoSuchRunnerException {
-        Runner runner = runnerRepository.ofNickname(nickname);
-
-        if (runner == null) {
+        if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
         }
 
-        Collection<Run> result = runRepository.all(runner.id());
+        Collection<Run> result = runRepository.all(nickname);
         return result;
     }
 
     public RunningStatistics getStatistics(String nickname) throws NoSuchRunnerException {
-        Runner runner = runnerRepository.ofNickname(nickname);
-
-        if (runner == null) {
+        if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
         }
 
-        RunningStatistics statisctics = statisticsService.statistics(runner.id(), TimeSpan.thisYear());
+        RunningStatistics statisctics = statisticsService.statistics(nickname, TimeSpan.thisYear());
         return statisctics;
     }
 
-    public void insertNewRun(String nickname, LocalDate when, Distance howMuch, Duration howLong) throws NoSuchRunnerException {
-
-        Runner runner = runnerRepository.ofNickname(nickname);
-
-        if (runner == null) {
+    public void insertRun(String nickname, LocalDate when, Distance howMuch, Duration howLong) throws NoSuchRunnerException {
+        if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
         }
 
         RunId id = runRepository.nextId();
 
-        Run newRun = new Run(id, runner.id(), when, howMuch, howLong);
+        Run newRun = new Run(id, nickname, when, howMuch, howLong);
         runRepository.add(newRun);
     }
 }

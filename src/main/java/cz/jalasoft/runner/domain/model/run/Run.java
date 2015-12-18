@@ -1,7 +1,6 @@
 package cz.jalasoft.runner.domain.model.run;
 
 import cz.jalasoft.runner.domain.model.DomainEntity;
-import cz.jalasoft.runner.domain.model.runner.RunnerId;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -15,15 +14,13 @@ import static java.time.LocalDate.now;
 public final class Run extends DomainEntity {
 
     private RunId id;
-    private RunnerId runnerId;
-
+    private String nickname;
     private LocalDate date;
     private Distance distance;
     private Duration duration;
 
-    public Run(RunId id, RunnerId runnerId, LocalDate when, Distance howMuch, Duration howLong) {
+    public Run(RunId id, String nickname, LocalDate when, Distance howMuch, Duration howLong) {
         setId(id);
-        setRunnerId(runnerId);
         setDate(when);
         setDistance(howMuch);
         setDuration(howLong);
@@ -44,15 +41,18 @@ public final class Run extends DomainEntity {
         return id;
     }
 
-    private void setRunnerId(RunnerId runnerId) {
-        if (runnerId == null) {
-            throw new IllegalArgumentException("RunnerId must not be null");
+    private void setNickname(String nickname) {
+        if (nickname == null) {
+            throw new IllegalArgumentException("Nickname must not be null.");
         }
-        this.runnerId = runnerId;
+        if (nickname.isEmpty()) {
+            throw new IllegalArgumentException("Nickname must not be empty.");
+        }
+        this.nickname = nickname;
     }
 
-    private RunnerId getRunnerId() {
-        return runnerId;
+    private String getNickname() {
+        return nickname;
     }
 
     private void setDate(LocalDate date) {

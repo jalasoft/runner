@@ -1,7 +1,7 @@
 package cz.jalasoft.runner.domain.model.runner;
 
 import java.util.Collection;
-import java.util.UUID;
+import java.util.Optional;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -9,16 +9,13 @@ import java.util.UUID;
  */
 public interface RunnerRepository {
 
-    default RunnerId nextIdentity() {
-        UUID randomUUID = UUID.randomUUID();
-        return new RunnerId(randomUUID.toString());
-    }
-
     void add(Runner runner);
 
-    void remove(RunnerId runnerId);
+    void remove(String nickname);
 
     Runner ofNickname(String nickname);
+
+    boolean has(String nickname);
 
     Collection<Runner> all();
 }

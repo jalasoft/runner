@@ -7,9 +7,6 @@
         <id name="persistenceId" column="id">
             <generator class="native"/>
         </id>
-        <component name="id" class="RunnerId">
-            <property name="id" column="domain_id" access="field"/>
-        </component>
         <property name="nickname" column="nickname"/>
         <property name="birthday" column="birthday" access="field"/>
         <component name="name" class="Name" access="field">

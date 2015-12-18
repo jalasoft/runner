@@ -30,14 +30,15 @@ public class TransactionInterception {
     private void applicationServicePointcut() {}
 
     @Around("applicationServicePointcut()")
-    private void runInTransactionAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+    private Object runInTransactionAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
         Session session = sessionFactory.openSession();
         sessionProvider.setSession(session);
 
         Transaction transaction = session.beginTransaction();
         try {
-            joinPoint.proceed();
+            Object result = joinPoint.proceed();
             transaction.commit();
+            return result;
         } catch (Throwable t) {
             transaction.rollback();
             throw t;

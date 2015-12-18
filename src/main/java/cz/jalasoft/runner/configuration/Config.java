@@ -1,14 +1,24 @@
-package cz.jalasoft.runner.infrastructure.config;
+package cz.jalasoft.runner.configuration;
 
+import cz.jalasoft.runner.domain.model.run.RunRepository;
+import cz.jalasoft.runner.domain.model.runner.RunnerRepository;
 import cz.jalasoft.runner.domain.model.service.RunningStatisticsService;
+import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
 import cz.jalasoft.runner.infrastructure.SessionProvider;
+import cz.jalasoft.runner.infrastructure.persistence.HibernateRunRepository;
+import cz.jalasoft.runner.infrastructure.persistence.HibernateRunnerRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import static org.hibernate.cfg.Environment.*;
 
@@ -19,8 +29,11 @@ import static org.hibernate.cfg.Environment.*;
 @Configuration
 public class Config {
 
+    //@Value("classpath:init.sql")
+    //private Resource initDb;
+
     @Bean
-    public SessionFactory sessionFactory(DbSetting dbSetting) {
+    public SessionFactory sessionFactory(DatabaseSetting dbSetting) {
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 
                 .applySetting(DRIVER, dbSetting.getDriver())
@@ -41,12 +54,32 @@ public class Config {
     }
 
     @Bean
-    public SessionProvider sessionProvider() {
-        return new SessionProvider();
+    public SessionProvider sessionProvider(
+            DatabaseSetting setting,
+            @Value("classpath:init.sql")
+            Resource initDb) {
+
+        SessionProvider provider = new SessionProvider();
+
+        new DatabaseInitializer(initDb, setting).initialize();
+
+        return provider;
     }
+
+
 
     @Bean
     public RunningStatisticsService runningStatisticsService() {
         return new RunningStatisticsService();
+    }
+
+    @Bean
+    public RunnerRepository runnerRepository(SessionProvider sessionProvider) {
+        return new HibernateRunnerRepository(sessionProvider);
+    }
+
+    @Bean
+    public RunRepository runRepository(SessionProvider sessionProvider) {
+        return new HibernateRunRepository(sessionProvider);
     }
 }

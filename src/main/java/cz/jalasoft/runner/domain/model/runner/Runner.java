@@ -14,14 +14,11 @@ import static java.time.temporal.ChronoUnit.YEARS;
  */
 public class Runner extends DomainEntity {
 
-    private RunnerId id;
-
     private String nickname;
     private Name name;
     private LocalDate birthday;
 
-    public Runner(RunnerId id, String nickname, String firstName, String lastName, LocalDate birthday) {
-        setId(id);
+    public Runner(String nickname, String firstName, String lastName, LocalDate birthday) {
         setNickname(nickname);
         setName(firstName, lastName);
         setBirthday(birthday);
@@ -31,18 +28,11 @@ public class Runner extends DomainEntity {
 
     }
 
-    private void setId(RunnerId id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Id of runner must not be null.");
-        }
-        this.id = id;
-    }
-
-    private RunnerId getId() {
-        return id;
-    }
-
     private void setNickname(String nickname) {
+        if (this.nickname != null) {
+            throw new IllegalStateException("Nickname cannot be set more than once.");
+        }
+
         if (nickname == null) {
             throw new IllegalArgumentException("Nickname of a runner must not be null.");
         }
@@ -70,10 +60,6 @@ public class Runner extends DomainEntity {
             throw new IllegalArgumentException("Birthday of a runner must be past date,");
         }
         this.birthday = birthday;
-    }
-
-    public RunnerId id() {
-        return id;
     }
 
     public String nickname() {
@@ -105,19 +91,21 @@ public class Runner extends DomainEntity {
 
         Runner that = (Runner) obj;
 
-        return this.id().equals(that.id());
+        return this.nickname().equals(that.nickname());
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        result = result * 37 + id().hashCode();
+        result = result * 37 + nickname().hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         return new StringBuilder("Runner[")
+                .append(nickname())
+                .append(",")
                 .append(name())
                 .append(",birthday=")
                 .append(birthday())
