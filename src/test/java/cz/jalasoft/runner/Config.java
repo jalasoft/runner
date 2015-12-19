@@ -1,10 +1,13 @@
 package cz.jalasoft.runner;
 
 import cz.jalasoft.runner.configuration.DatabaseSetting;
+import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.io.Resource;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -23,6 +26,9 @@ import org.springframework.context.annotation.FilterType;
 @Configuration
 public class Config extends cz.jalasoft.runner.configuration.Config {
 
+        @Value("classpath:clean.sql")
+        private Resource cleanScript;
+
         @Bean
         public DatabaseSetting dbSetting() {
                 DatabaseSetting setting = new DatabaseSetting();
@@ -34,5 +40,10 @@ public class Config extends cz.jalasoft.runner.configuration.Config {
                 setting.setPoolSize(4);
 
                 return setting;
+        }
+
+        @Bean
+        public DatabaseInitializer initializer(DatabaseSetting setting) {
+             return new DatabaseInitializer(cleanScript, setting);
         }
 }

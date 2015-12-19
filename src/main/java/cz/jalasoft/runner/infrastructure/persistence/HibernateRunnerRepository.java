@@ -35,7 +35,8 @@ public final class HibernateRunnerRepository implements RunnerRepository {
 
     @Override
     public void remove(String nickname) {
-       //TODO
+        Runner runner = ofNickname(nickname);
+        sessionProvider.session().delete(runner);
     }
 
     @Override

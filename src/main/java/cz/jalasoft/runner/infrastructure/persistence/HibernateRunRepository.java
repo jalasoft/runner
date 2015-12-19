@@ -27,7 +27,7 @@ public class HibernateRunRepository implements RunRepository {
 
     @Override
     public void add(Run run) {
-
+        sessionProvider.session().save(run);
     }
 
     @Override

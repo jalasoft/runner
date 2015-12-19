@@ -44,6 +44,16 @@ public class RunnerApplicationService {
         return runner;
     }
 
+    public Runner getRunner(String nickname) throws NoSuchRunnerException {
+
+        if (!runnerRepository.has(nickname)) {
+            throw new NoSuchRunnerException(nickname);
+        }
+
+        Runner runner =runnerRepository.ofNickname(nickname);
+        return runner;
+    }
+
     public void unregistersRunner(String nickname) throws NoSuchRunnerException {
         if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
