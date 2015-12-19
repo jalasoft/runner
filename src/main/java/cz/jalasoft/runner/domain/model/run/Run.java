@@ -19,8 +19,13 @@ public final class Run extends DomainEntity {
     private Distance distance;
     private Duration duration;
 
+    protected Run() {
+
+    }
+
     public Run(RunId id, String nickname, LocalDate when, Distance howMuch, Duration howLong) {
         setId(id);
+        setNickname(nickname);
         setDate(when);
         setDistance(howMuch);
         setDuration(howLong);
@@ -95,6 +100,10 @@ public final class Run extends DomainEntity {
     //---------------------------------------------------------------------
     //PUBLIC INTERFACE
     //---------------------------------------------------------------------
+
+    public String nickname() {
+        return nickname;
+    }
 
     public LocalDate date() {
         return date;

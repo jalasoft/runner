@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS run (
   date DATE NOT NULL,
   distance_unit INT NOT NULL,
   distance_value INT NOT NULL,
+  duration VARCHAR NOT NULL,
   PRIMARY KEY (id)
 );

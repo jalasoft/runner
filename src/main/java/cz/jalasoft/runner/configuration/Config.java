@@ -10,6 +10,7 @@ import cz.jalasoft.runner.infrastructure.persistence.HibernateRunnerRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,7 @@ public class Config {
 
     @Bean
     public SessionFactory sessionFactory(DatabaseSetting dbSetting) {
+
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 
                 .applySetting(DRIVER, dbSetting.getDriver())
@@ -47,9 +49,11 @@ public class Config {
         Metadata metadata = new MetadataSources(serviceRegistry)
                 .addResource("Runner.hbm.xml")
                 .addResource("Run.hbm.xml")
+
                 .buildMetadata();
 
         SessionFactory sessionFactory = metadata.buildSessionFactory();
+
         return sessionFactory;
     }
 

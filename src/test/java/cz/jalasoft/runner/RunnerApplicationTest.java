@@ -3,27 +3,26 @@ package cz.jalasoft.runner;
 import cz.jalasoft.runner.application.RunnerApplicationService;
 import cz.jalasoft.runner.application.exception.NoSuchRunnerException;
 import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
-import cz.jalasoft.runner.domain.model.run.Distance;
 import cz.jalasoft.runner.domain.model.run.Run;
 import cz.jalasoft.runner.domain.model.runner.Runner;
 import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
+import cz.jalasoft.runner.support.RunExpectation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import javax.annotation.PostConstruct;
 
 import java.util.Collection;
 
-import static java.time.Duration.*;
-import static java.time.LocalDate.*;
-import static org.testng.Assert.*;
-import static cz.jalasoft.runner.domain.model.run.Distance.*;
+import static cz.jalasoft.runner.domain.model.run.Distance.ofKilometers;
+import static cz.jalasoft.runner.support.RunsMatcher.has;
+import static java.time.Duration.ofMinutes;
+import static java.time.LocalDate.now;
+import static java.time.LocalDate.of;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -92,11 +91,25 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
     public void insertedRunsForRunnerAreRetrieved() throws RunnerAlreadyExistsException, NoSuchRunnerException {
 
         service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
+        service().registerRunner("Prdales", "Tonda", "Ponozka", of(2000, 3, 4));
 
         service().insertRun("Honzales", now().minusDays(2), ofKilometers(5), ofMinutes(40));
         service().insertRun("Honzales", now(), ofKilometers(4), ofMinutes(25));
+        service().insertRun("Prdales", now(), ofKilometers(7), ofMinutes(50));
 
         Collection<Run> runs = service().getRuns("Honzales");
         assertEquals(2, runs.size());
+
+        assertThat(runs, has(RunExpectation.run()
+                .withNickname("Honzales")
+                .withDate(now())
+                .withDistance(ofKilometers(4))
+                .withDuration(ofMinutes(25))));
+
+        assertThat(runs, has(RunExpectation.run()
+                .withNickname("Honzales")
+                .withDate(now().minusDays(2))
+                .withDistance(ofKilometers(5))
+                .withDuration(ofMinutes(40))));
     }
 }
