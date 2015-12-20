@@ -112,4 +112,12 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
                 .withDistance(ofKilometers(5))
                 .withDuration(ofMinutes(40))));
     }
+
+    @Test
+    public void runsForUnregisteredRunnerAreNOMoreAvailable() throws RunnerAlreadyExistsException, NoSuchRunnerException {
+
+        service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
+
+        service().insertRun("Honzales", now().minusDays(1), ofKilometers(5.23), ofMinutes(20));
+    }
 }

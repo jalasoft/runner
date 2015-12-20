@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS run (
   run_id UUID,
   nickname VARCHAR(20) NOT NULL,
   date DATE NOT NULL,
-  distance_unit INT NOT NULL,
-  distance_value INT NOT NULL,
+  distance_meters BIGINT NOT NULL,
   duration VARCHAR NOT NULL,
   PRIMARY KEY (id)
 );

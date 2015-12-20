@@ -6,43 +6,53 @@ package cz.jalasoft.runner.domain.model.run;
  */
 public final class Distance {
 
-    public static Distance ofKilometers(float kilometers) {
-        return new Distance(kilometers, DistanceUnit.KM);
+    //---------------------------------------------------------
+    //FACTORY METHODS
+    //---------------------------------------------------------
+
+    public static Distance ofMeters(long meters) {
+        if (meters <= 0) {
+            throw new IllegalArgumentException("Meters must be greater than zero.");
+        }
+
+        return new Distance(meters);
     }
 
-    private float value;
-    private DistanceUnit unit;
+    public static Distance ofKilometers(double kilometers) {
+        if (kilometers <= 0) {
+            throw new IllegalArgumentException("Kilometers must be greater than zero.");
+        }
 
-    Distance(float value, DistanceUnit unit) {
-        this.value = value;
-        this.unit = unit;
+        double value = DistanceUnit.KILOMETER.to(kilometers, DistanceUnit.METER);
+        return new Distance((long) value);
+    }
+
+    //----------------------------------------------------------
+    //INSTANCE SCOPE
+    //----------------------------------------------------------
+
+
+
+    private long valueInMeters;
+
+    Distance(long valueInMeters) {
+        this.valueInMeters = valueInMeters;
     }
 
     protected Distance() {
     }
 
-    private float getValue() {
-        return value;
+    private long getValue() {
+        return valueInMeters;
     }
 
-    private void setValue(float value) {
-        this.value = value;
+    private void setValue(long value) {
+        this.valueInMeters = value;
     }
 
-    private DistanceUnit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(DistanceUnit unit) {
-        this.unit = unit;
-    }
-
-    public float value() {
-        return value;
-    }
-
-    public DistanceUnit unit() {
-        return unit;
+    public double in(DistanceUnit unit) {
+        double result = DistanceUnit.METER.to(valueInMeters, unit);
+        return result;
     }
 
     @Override
@@ -57,20 +67,23 @@ public final class Distance {
 
         Distance that = (Distance) obj;
 
-        if (!this.unit().equals(that.unit())) {
-            return false;
-        }
-
-        return this.value() == that.value();
+        return this.valueInMeters == that.valueInMeters;
     }
 
     @Override
     public int hashCode() {
         int result = 17;
 
-        result = result * 37 + unit().hashCode();
-        result = result * 37 + Float.floatToIntBits(value());
+        result = result * 37 + (int) valueInMeters;
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Distance[")
+                .append(valueInMeters)
+                .append(" m]")
+                .toString();
     }
 }

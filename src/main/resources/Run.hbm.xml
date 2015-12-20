@@ -14,8 +14,7 @@
         <property name="nickname" column="nickname"/>
         <property name="date" column="date"/>
         <component name="distance" class="Distance">
-            <property name="value" column="distance_value"/>
-            <property name="unit" column="distance_unit" type="cz.jalasoft.runner.infrastructure.persistence.type.DistanceUnitType"/>
+            <property name="value" column="distance_meters"/>
         </component>
         <property name="duration" column="duration" type="cz.jalasoft.runner.infrastructure.persistence.type.DurationType"/>
     </class>

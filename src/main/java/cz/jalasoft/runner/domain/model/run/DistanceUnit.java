@@ -6,26 +6,39 @@ package cz.jalasoft.runner.domain.model.run;
  */
 public enum DistanceUnit {
 
-    KM(0);
-
-    DistanceUnit(int id) {
-        this.id = id;
-    }
-
-    private final int id;
-
-    public int id() {
-        return id;
-    }
-
-    //----------------------------------------
-    //STATIC SCOPE
-    //----------------------------------------
-
-    public static DistanceUnit fromId(int id) {
-        if (id == 0) {
-            return KM;
+    METER {
+        @Override
+        long toMeters(double value) {
+            return (long) value;
         }
-        throw new IllegalArgumentException("Unknown DistanceUnit id: " + id);
+
+        @Override
+        double fromMeters(long meters) {
+            return (double) meters;
+        }
+    },
+    KILOMETER {
+        @Override
+        long toMeters(double value) {
+            return (long)(value * 1000);
+        }
+
+        @Override
+        double fromMeters(long meters) {
+            double value = (double) meters / 1000;
+
+            double result = (double) (Math.round(value * 1000)) / 1000;
+            return result;
+        }
+    };
+
+    public double to(double value, DistanceUnit unit) {
+        long meters = toMeters(value);
+        return unit.fromMeters(meters);
     }
+
+    abstract long toMeters(double value);
+
+    abstract double fromMeters(long meters);
+
 }
