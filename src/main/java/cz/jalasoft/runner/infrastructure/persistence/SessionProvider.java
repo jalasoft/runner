@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.infrastructure;
+package cz.jalasoft.runner.infrastructure.persistence;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;

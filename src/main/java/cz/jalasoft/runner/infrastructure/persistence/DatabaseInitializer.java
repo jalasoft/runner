@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.infrastructure;
+package cz.jalasoft.runner.infrastructure.persistence;
 
 import cz.jalasoft.runner.configuration.DatabaseSetting;
 import org.springframework.core.io.Resource;

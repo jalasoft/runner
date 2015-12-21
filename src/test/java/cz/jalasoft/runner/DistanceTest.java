@@ -1,14 +1,12 @@
 package cz.jalasoft.runner;
 
-import cz.jalasoft.runner.domain.model.run.Distance;
 import org.testng.annotations.Test;
 
-import java.math.BigDecimal;
-
-import static org.testng.Assert.*;
-import static cz.jalasoft.runner.domain.model.run.DistanceUnit.*;
-
-import static cz.jalasoft.runner.domain.model.run.Distance.*;
+import static cz.jalasoft.runner.domain.model.run.Distance.ofKilometers;
+import static cz.jalasoft.runner.domain.model.run.Distance.ofMeters;
+import static cz.jalasoft.runner.domain.model.run.DistanceUnit.KILOMETER;
+import static cz.jalasoft.runner.domain.model.run.DistanceUnit.METER;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)

@@ -5,7 +5,7 @@ import cz.jalasoft.runner.application.exception.NoSuchRunnerException;
 import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
 import cz.jalasoft.runner.domain.model.run.Run;
 import cz.jalasoft.runner.domain.model.runner.Runner;
-import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
+import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
 import cz.jalasoft.runner.support.RunExpectation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import java.util.Collection;
 
 import static cz.jalasoft.runner.domain.model.run.Distance.ofKilometers;
+import static cz.jalasoft.runner.domain.model.run.Distance.ofMeters;
 import static cz.jalasoft.runner.support.RunsMatcher.has;
 import static java.time.Duration.ofMinutes;
 import static java.time.LocalDate.now;
@@ -23,6 +24,7 @@ import static java.time.LocalDate.of;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -113,11 +115,16 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
                 .withDuration(ofMinutes(40))));
     }
 
-    @Test
-    public void runsForUnregisteredRunnerAreNOMoreAvailable() throws RunnerAlreadyExistsException, NoSuchRunnerException {
+    @Test(expectedExceptions = {NoSuchRunnerException.class})
+    public void anExceptionIsThrownByQueringRunnerPRopertiesAfterItIsUnregistered() throws RunnerAlreadyExistsException, NoSuchRunnerException {
 
         service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
 
         service().insertRun("Honzales", now().minusDays(1), ofKilometers(5.23), ofMinutes(20));
+        service().insertRun("Honzales", now(), ofMeters(5434), ofMinutes(45));
+
+        service().unregistersRunner("Honzales");
+
+        service().getRuns("Honzales");
     }
 }

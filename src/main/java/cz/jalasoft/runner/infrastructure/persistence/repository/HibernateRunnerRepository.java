@@ -1,16 +1,13 @@
-package cz.jalasoft.runner.infrastructure.persistence;
+package cz.jalasoft.runner.infrastructure.persistence.repository;
 
 import cz.jalasoft.runner.domain.model.runner.Runner;
 import cz.jalasoft.runner.domain.model.runner.RunnerRepository;
-import cz.jalasoft.runner.infrastructure.SessionProvider;
+import cz.jalasoft.runner.infrastructure.persistence.SessionProvider;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)

@@ -19,4 +19,6 @@ public interface RunRepository {
     Collection<Run> in(String nickname, TimeSpan timeSpan);
 
     Collection<Run> all(String nickname);
+
+    void removeForRunner(String nickname);
 }

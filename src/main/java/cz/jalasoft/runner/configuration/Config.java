@@ -3,23 +3,19 @@ package cz.jalasoft.runner.configuration;
 import cz.jalasoft.runner.domain.model.run.RunRepository;
 import cz.jalasoft.runner.domain.model.runner.RunnerRepository;
 import cz.jalasoft.runner.domain.model.service.RunningStatisticsService;
-import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
-import cz.jalasoft.runner.infrastructure.SessionProvider;
-import cz.jalasoft.runner.infrastructure.persistence.HibernateRunRepository;
-import cz.jalasoft.runner.infrastructure.persistence.HibernateRunnerRepository;
+import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
+import cz.jalasoft.runner.infrastructure.persistence.SessionProvider;
+import cz.jalasoft.runner.infrastructure.persistence.repository.HibernateRunRepository;
+import cz.jalasoft.runner.infrastructure.persistence.repository.HibernateRunnerRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import static org.hibernate.cfg.Environment.*;
 

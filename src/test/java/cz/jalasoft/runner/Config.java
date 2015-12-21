@@ -1,7 +1,7 @@
 package cz.jalasoft.runner;
 
 import cz.jalasoft.runner.configuration.DatabaseSetting;
-import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
+import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

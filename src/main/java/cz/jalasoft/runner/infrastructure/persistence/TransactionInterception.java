@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.infrastructure;
+package cz.jalasoft.runner.infrastructure.persistence;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

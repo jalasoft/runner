@@ -1,15 +1,11 @@
 package cz.jalasoft.runner.util;
 
 import cz.jalasoft.runner.configuration.DatabaseSetting;
-import cz.jalasoft.runner.infrastructure.DatabaseInitializer;
-import org.springframework.context.annotation.Bean;
+import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import javax.sql.DataSource;

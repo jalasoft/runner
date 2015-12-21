@@ -1,12 +1,10 @@
-package cz.jalasoft.runner.infrastructure.persistence;
+package cz.jalasoft.runner.infrastructure.persistence.repository;
 
 import cz.jalasoft.runner.domain.model.run.Run;
 import cz.jalasoft.runner.domain.model.run.RunRepository;
 import cz.jalasoft.runner.domain.model.run.TimeSpan;
-import cz.jalasoft.runner.infrastructure.SessionProvider;
+import cz.jalasoft.runner.infrastructure.persistence.SessionProvider;
 import org.hibernate.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
@@ -46,5 +44,12 @@ public class HibernateRunRepository implements RunRepository {
         Collection<Run> result = query.list();
 
         return result;
+    }
+
+    @Override
+    public void removeForRunner(String nickname) {
+        Collection<Run> all = all(nickname);
+
+        all.forEach(run -> sessionProvider.session().delete(run));
     }
 }

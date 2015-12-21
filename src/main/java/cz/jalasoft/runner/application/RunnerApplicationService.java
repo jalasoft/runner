@@ -14,6 +14,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import static java.time.LocalDate.parse;
+import static java.time.format.DateTimeFormatter.ISO_DATE;
+
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 12/5/15.
@@ -80,14 +83,17 @@ public class RunnerApplicationService {
         return statisctics;
     }
 
-    public void insertRun(String nickname, LocalDate when, Distance howMuch, Duration howLong) throws NoSuchRunnerException {
+    public void insertRun(String nickname, String dateInIso, double distanceInKilometers, int durationInMinutes) throws NoSuchRunnerException {
         if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
         }
 
+        LocalDate date = parse(dateInIso, ISO_DATE);
+        Distance distance = Distance.ofKilometers(distanceInKilometers);
+        Duration duration = Duration.ofMinutes(durationInMinutes);
         RunId id = runRepository.nextId();
 
-        Run newRun = new Run(id, nickname, when, howMuch, howLong);
+        Run newRun = new Run(id, nickname, date, distance, duration);
         runRepository.add(newRun);
     }
 }
