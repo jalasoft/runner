@@ -83,7 +83,7 @@ public class RunnerApplicationService {
         return statisctics;
     }
 
-    public void insertRun(String nickname, String dateInIso, double distanceInKilometers, int durationInMinutes) throws NoSuchRunnerException {
+    public Run insertRun(String nickname, String dateInIso, double distanceInKilometers, int durationInMinutes) throws NoSuchRunnerException {
         if (!runnerRepository.has(nickname)) {
             throw new NoSuchRunnerException(nickname);
         }
@@ -95,5 +95,7 @@ public class RunnerApplicationService {
 
         Run newRun = new Run(id, nickname, date, distance, duration);
         runRepository.add(newRun);
+
+        return newRun;
     }
 }

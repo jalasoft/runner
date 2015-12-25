@@ -2,12 +2,13 @@ package cz.jalasoft.runner.infrastructure.endpoint;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 12/12/15.
  */
-public class RunnerResource {
+public class RunnerResource extends ResourceSupport {
 
     private String nickname;
     private String firstName;
