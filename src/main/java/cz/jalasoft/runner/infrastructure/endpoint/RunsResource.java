@@ -10,7 +10,7 @@ import java.util.Collection;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 12/25/15.
  */
-public final class RunsResource extends ResourceSupport {
+public class RunsResource extends ResourceSupport {
 
     private Collection<RunResource> runs;
 

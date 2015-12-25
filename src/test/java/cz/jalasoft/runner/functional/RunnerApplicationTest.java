@@ -1,4 +1,4 @@
-package cz.jalasoft.runner;
+package cz.jalasoft.runner.functional;
 
 import cz.jalasoft.runner.application.RunnerApplicationService;
 import cz.jalasoft.runner.application.exception.NoSuchRunnerException;
@@ -6,7 +6,7 @@ import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
 import cz.jalasoft.runner.domain.model.run.Run;
 import cz.jalasoft.runner.domain.model.runner.Runner;
 import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
-import cz.jalasoft.runner.support.RunExpectation;
+import cz.jalasoft.runner.functional.support.RunExpectation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -16,15 +16,14 @@ import org.testng.annotations.Test;
 import java.util.Collection;
 
 import static cz.jalasoft.runner.domain.model.run.Distance.ofKilometers;
-import static cz.jalasoft.runner.domain.model.run.Distance.ofMeters;
-import static cz.jalasoft.runner.support.RunsMatcher.has;
+import static cz.jalasoft.runner.functional.support.RunsMatcher.has;
 import static java.time.Duration.ofMinutes;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
+import static java.time.format.DateTimeFormatter.ISO_DATE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -95,9 +94,9 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
         service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
         service().registerRunner("Prdales", "Tonda", "Ponozka", of(2000, 3, 4));
 
-        service().insertRun("Honzales", now().minusDays(2), ofKilometers(5), ofMinutes(40));
-        service().insertRun("Honzales", now(), ofKilometers(4), ofMinutes(25));
-        service().insertRun("Prdales", now(), ofKilometers(7), ofMinutes(50));
+        service().insertRun("Honzales", now().minusDays(2).format(ISO_DATE), 5, 40);
+        service().insertRun("Honzales", now().format(ISO_DATE), 4, 25);
+        service().insertRun("Prdales", now().format(ISO_DATE), 7, 50);
 
         Collection<Run> runs = service().getRuns("Honzales");
         assertEquals(2, runs.size());
@@ -120,8 +119,8 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
 
         service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
 
-        service().insertRun("Honzales", now().minusDays(1), ofKilometers(5.23), ofMinutes(20));
-        service().insertRun("Honzales", now(), ofMeters(5434), ofMinutes(45));
+        service().insertRun("Honzales", now().minusDays(1).format(ISO_DATE), 5.23, 20);
+        service().insertRun("Honzales", now().format(ISO_DATE), 5434, 45);
 
         service().unregistersRunner("Honzales");
 

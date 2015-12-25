@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.util;
+package cz.jalasoft.runner.functional.util;
 
 import cz.jalasoft.runner.configuration.DatabaseSetting;
 import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;

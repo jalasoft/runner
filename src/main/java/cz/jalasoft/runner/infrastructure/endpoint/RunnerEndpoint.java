@@ -32,7 +32,7 @@ public class RunnerEndpoint {
     private RunnerApplicationService runnerService;
 
     @RequestMapping(value = "/runner", method = RequestMethod.POST)
-    public ResponseEntity<?> registerRunner(@RequestBody RunnerResource resource) {
+    public ResponseEntity<RunnerResource> registerRunner(@RequestBody RunnerResource resource) {
         LocalDate birthdate = LocalDate.parse(resource.getBirthday(), ISO_DATE);
 
         try {

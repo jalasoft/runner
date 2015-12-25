@@ -1,4 +1,4 @@
-package cz.jalasoft.runner.support;
+package cz.jalasoft.runner.functional.support;
 
 import cz.jalasoft.runner.domain.model.run.Distance;
 import cz.jalasoft.runner.domain.model.run.Run;

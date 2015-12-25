@@ -17,13 +17,13 @@ public class RunnerResource extends ResourceSupport {
 
     @JsonCreator
     public RunnerResource(
-            @JsonProperty
+            @JsonProperty("nickname")
             String nickname,
-            @JsonProperty
+            @JsonProperty("first-name")
             String firstName,
-            @JsonProperty
+            @JsonProperty("last-name")
             String lastName,
-            @JsonProperty
+            @JsonProperty("birthday")
             String birthday) {
 
         this.nickname = nickname;
@@ -32,22 +32,22 @@ public class RunnerResource extends ResourceSupport {
         this.birthday = birthday;
     }
 
-    @JsonProperty
+    @JsonProperty("nickname")
     public String getNickname() {
         return nickname;
     }
 
-    @JsonProperty
+    @JsonProperty("first-name")
     public String getFirstName() {
         return firstName;
     }
 
-    @JsonProperty
+    @JsonProperty("last-name")
     public String getLastName() {
         return lastName;
     }
 
-    @JsonProperty
+    @JsonProperty("birthday")
     public String getBirthday() {
         return birthday;
     }

@@ -1,4 +1,4 @@
-package cz.jalasoft.runner;
+package cz.jalasoft.runner.unit;
 
 import org.testng.annotations.Test;
 
