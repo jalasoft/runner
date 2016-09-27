@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="cz.jalasoft.runner.domain.model.runner">
-    <class name="Runner" table="runner">
+    <class name="cz.jalasoft.runner.domain.model.runner.Runner" table="runner">
         <id name="persistenceId" column="id">
             <generator class="native"/>
         </id>

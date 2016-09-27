@@ -1,7 +1,6 @@
 package cz.jalasoft.runner.domain.model.runner;
 
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)

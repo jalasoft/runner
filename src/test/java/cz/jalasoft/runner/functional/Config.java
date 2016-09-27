@@ -1,6 +1,6 @@
 package cz.jalasoft.runner.functional;
 
-import cz.jalasoft.runner.Main;
+import cz.jalasoft.myhealth.Main;
 import cz.jalasoft.runner.configuration.DatabaseSetting;
 import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
 import org.springframework.beans.factory.annotation.Value;

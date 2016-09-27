@@ -34,7 +34,7 @@ public class RunnerEndpointTest extends AbstractTestNGSpringContextTests {
         mockMvc = webAppContextSetup(context).build();
     }
 
-    @Test
+    @Test(enabled = false)
     public void registersNewRunner() throws Exception {
         RunnerResource newRunner = new RunnerResource("Honzales", "Honza", "Lastovicka", "1983-11-11");
 

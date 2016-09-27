@@ -1,6 +1,6 @@
 package cz.jalasoft.runner.domain.model.run;
 
-import cz.jalasoft.runner.domain.model.DomainEntity;
+import cz.jalasoft.myhealth.domain.model.DomainEntity;
 
 import java.time.Duration;
 import java.time.LocalDate;
