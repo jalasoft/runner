@@ -6,13 +6,6 @@ package cz.jalasoft.myhealth.domain.model;
  */
 public abstract class DomainEntity {
 
-    private String persistenceId;
-
-    private String getPersistenceId() {
-        return persistenceId;
-    }
-
-    private void setPersistenceId(String persistenceId) {
-        this.persistenceId = persistenceId;
-    }
+    private long persistence_id;
+    private int version;
 }

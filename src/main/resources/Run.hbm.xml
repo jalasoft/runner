@@ -3,20 +3,22 @@
  "-//Hibernate/Hibernate Mapping DTD//EN"
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
   
-<hibernate-mapping package="cz.jalasoft.runner.domain.model.run">
-    <class name="Run" table="run">
-        <id name="persistenceId" column="id">
-            <generator class="native"/>
-        </id>
-        <component name="id" class="RunId">
-            <property name="id" column="run_id" access="field"/>
+<hibernate-mapping package="cz.jalasoft.myhealth.domain.model.run">
+
+    <class name="cz.jalasoft.myhealth.domain.model.run.Run" table="run">
+        <id access="field" name="persistence_id" column="id"/>
+        <version name="version" access="field"/>
+        <component name="id" class="cz.jalasoft.myhealth.domain.model.run.RunId">
+            <property name="id" column="domain_id" access="field"/>
         </component>
-        <property name="nickname" column="nickname"/>
+        <component name="userId" class="cz.jalasoft.myhealth.domain.model.user.UserId" access="field">
+            <property name="uuid" column="user_id" access="field"/>
+        </component>
         <property name="date" column="date"/>
-        <component name="distance" class="Distance">
+        <component name="distance" class="cz.jalasoft.myhealth.domain.model.run.Distance">
             <property name="value" column="distance_meters"/>
         </component>
-        <property name="duration" column="duration" type="cz.jalasoft.runner.infrastructure.persistence.type.DurationType"/>
+        <property name="duration" column="duration" type="cz.jalasoft.myhealth.infrastructure.persistence.DurationType"/>
     </class>
 </hibernate-mapping>
         

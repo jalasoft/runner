@@ -3,8 +3,7 @@ package cz.jalasoft.runner.integration;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import cz.jalasoft.runner.infrastructure.endpoint.RunnerResource;
+import cz.jalasoft.myhealth.endpoint.UserResource;
 
 import java.io.IOException;
 
@@ -14,7 +13,7 @@ import java.io.IOException;
  */
 public final class Util {
 
-    static byte[] serialize(RunnerResource resource) throws JsonProcessingException {
+    static byte[] serialize(UserResource resource) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         byte[] result = mapper.writeValueAsBytes(resource);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -22,7 +21,7 @@ public final class Util {
     }
 
 
-    static String serializeToString(RunnerResource resource) throws JsonProcessingException {
+    static String serializeToString(UserResource resource) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String result = mapper.writeValueAsString(resource);
         return result;

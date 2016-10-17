@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cz.jalasoft.myhealth.domain.model.user">
+    <class name="User" table="user">
+        <id column="id" access="field" name="persistence_id"/>
+        <version name="version" access="field"/>
+        <component name="id" class="UserId" access="field">
+            <property name="uuid" column="domain_id" access="field"/>
+        </component>
+        <component name="email" class="Email" access="field">
+            <property name="address" column="email" access="field"/>
+        </component>
+        <component name="personalInfo" class="PersonalInformation" access="field">
+            <property name="firstName" column="first_name" access="field"/>
+            <property name="lastName" column="last_name" access="field"/>
+            <property name="birthDay" column="birthday" access="field"/>
+        </component>
+    </class>
+</hibernate-mapping>

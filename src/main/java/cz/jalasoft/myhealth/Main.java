@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 12/5/15.
  */
+
 @SpringBootApplication
 public class Main {
 

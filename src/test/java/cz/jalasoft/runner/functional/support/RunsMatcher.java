@@ -1,7 +1,7 @@
 package cz.jalasoft.runner.functional.support;
 
 
-import cz.jalasoft.runner.domain.model.run.Run;
+import cz.jalasoft.myhealth.domain.model.run.Run;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 

@@ -1,7 +1,9 @@
 package cz.jalasoft.runner.integration;
 
-import cz.jalasoft.runner.infrastructure.endpoint.RunnerResource;
+import cz.jalasoft.myhealth.config.Config;
+import cz.jalasoft.myhealth.endpoint.UserResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -22,6 +24,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = Config.class)
+@ActiveProfiles("dev")
 public class RunnerEndpointTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
@@ -36,7 +39,7 @@ public class RunnerEndpointTest extends AbstractTestNGSpringContextTests {
 
     @Test(enabled = false)
     public void registersNewRunner() throws Exception {
-        RunnerResource newRunner = new RunnerResource("Honzales", "Honza", "Lastovicka", "1983-11-11");
+        UserResource newRunner = new UserResource("Honzales", "Honza", "Lastovicka", "1983-11-11");
 
         mockMvc.perform(
                 post("/runner")

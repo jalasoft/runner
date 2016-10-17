@@ -1,7 +1,7 @@
 package cz.jalasoft.runner.functional.support;
 
-import cz.jalasoft.runner.domain.model.run.Distance;
-import cz.jalasoft.runner.domain.model.run.Run;
+import cz.jalasoft.myhealth.domain.model.run.Distance;
+import cz.jalasoft.myhealth.domain.model.run.Run;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,15 +16,9 @@ public class RunExpectation {
         return new RunExpectation();
     }
 
-    private String nickname;
     private LocalDate date;
     private Distance distance;
     private Duration duration;
-
-    public RunExpectation withNickname(String nickname) {
-        this.nickname = nickname;
-        return this;
-    }
 
     public RunExpectation withDate(LocalDate date) {
         this.date = date;
@@ -42,20 +36,11 @@ public class RunExpectation {
     }
 
     public boolean matches(Run run) {
-        boolean nicknameMatches = nicknameMatches(run);
         boolean dateMatches = dateMatches(run);
         boolean distanceMatches = distanceMatches(run);
         boolean durationMatches = durationMatches(run);
 
-        return nicknameMatches && dateMatches && distanceMatches && durationMatches;
-    }
-
-    private boolean nicknameMatches(Run run) {
-        if (nickname == null) {
-            return true;
-        }
-
-        return nickname.equals(run.nickname());
+        return dateMatches && distanceMatches && durationMatches;
     }
 
     private boolean dateMatches(Run run) {

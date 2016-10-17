@@ -16,7 +16,7 @@ Ext.application({
     // will gain a "viewport" plugin if it does not extend Ext.Viewport. With the
     // modern toolkit, the main view will be added to the Viewport.
     //
-    mainView: 'MyHealth.view.main.RunTable'
+    mainView: 'MyHealth.view.main.MainView'
 	
     //-------------------------------------------------------------------------
     // Most customizations should be made to MyHealth.Application. If you need to

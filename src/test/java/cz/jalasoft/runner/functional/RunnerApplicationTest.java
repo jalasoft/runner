@@ -1,27 +1,17 @@
 package cz.jalasoft.runner.functional;
 
-import cz.jalasoft.runner.application.RunnerApplicationService;
-import cz.jalasoft.runner.application.exception.NoSuchRunnerException;
-import cz.jalasoft.runner.application.exception.RunnerAlreadyExistsException;
-import cz.jalasoft.runner.domain.model.run.Run;
-import cz.jalasoft.runner.domain.model.runner.Runner;
-import cz.jalasoft.runner.infrastructure.persistence.DatabaseInitializer;
-import cz.jalasoft.runner.functional.support.RunExpectation;
+import cz.jalasoft.myhealth.application.MyHealthApplicationService;
+import cz.jalasoft.myhealth.application.exception.NoSuchUserException;
+import cz.jalasoft.myhealth.application.exception.UserAlreadyExistsException;
+import cz.jalasoft.myhealth.domain.model.user.Email;
+import cz.jalasoft.myhealth.domain.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Collection;
-
-import static cz.jalasoft.runner.domain.model.run.Distance.ofKilometers;
-import static cz.jalasoft.runner.functional.support.RunsMatcher.has;
-import static java.time.Duration.ofMinutes;
-import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
-import static java.time.format.DateTimeFormatter.ISO_DATE;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -30,66 +20,59 @@ import static org.testng.Assert.assertNotNull;
  * @since 12/13/15.
  */
 @ContextConfiguration(
-        classes = Config.class
+        classes = TestConfig.class
 )
+@ActiveProfiles("dev")
 public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    private RunnerApplicationService service;
+    private MyHealthApplicationService service;
 
-    @Autowired
-    private DatabaseInitializer dbInitializer;
-
-    protected RunnerApplicationService service() {
+    protected MyHealthApplicationService service() {
         return service;
     }
 
-    @BeforeMethod
-    public void initTest() {
-        dbInitializer.initialize();
-    }
-
-    @Test(expectedExceptions = {NoSuchRunnerException.class})
-    public void anAttemptToObtainNotExistingRunnerThrowsException() throws NoSuchRunnerException {
-       service().getRunner("Honzales");
+    @Test(expectedExceptions = {NoSuchUserException.class})
+    public void anAttemptToObtainNotExistingRunnerThrowsException() throws NoSuchUserException {
+       service().getUser("Honzales@prdel.cz");
     }
 
     @Test
-    public void registersNewRunnerSuccessfully() throws RunnerAlreadyExistsException {
+    public void registersNewRunnerSuccessfully() throws UserAlreadyExistsException {
 
-        Runner runner = service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
+        User user = service().registerUser("Honzales@prdel.cz", "Jan", "Lastovicka", of(1983, 11, 11));
 
-        assertNotNull(runner);
-        assertEquals("Honzales", runner.nickname());
-        assertEquals("Jan", runner.name().firstName());
-        assertEquals("Lastovicka", runner.name().lastName());
-        assertEquals(of(1983, 11, 11), runner.birthday());
+        assertNotNull(user);
+        assertEquals(new Email("Honzales@prdel.cz"), user.email());
+        assertEquals("Jan", user.firstName());
+        assertEquals("Lastovicka", user.lastName());
+        assertEquals(of(1983, 11, 11), user.birthDay());
     }
 
     @Test
-    public void registersAndUnregistersRunner() throws RunnerAlreadyExistsException, NoSuchRunnerException {
+    public void registersAndUnregistersRunner() throws UserAlreadyExistsException, NoSuchUserException {
 
-        service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
+        service().registerUser("honzales@kolin.cz", "Jan", "Lastovicka", of(1983, 11, 11));
 
-        Runner runner = service().getRunner("Honzales");
-        assertNotNull(runner);
-        assertEquals("Honzales", runner.nickname());
-        assertEquals("Jan", runner.name().firstName());
-        assertEquals("Lastovicka", runner.name().lastName());
-        assertEquals(of(1983, 11, 11), runner.birthday());
+        User user = service().getUser("honzales@kolin.cz");
+        assertNotNull(user);
+        assertEquals("honzales@kolin.cz", user.email().address());
+        assertEquals("Jan", user.firstName());
+        assertEquals("Lastovicka", user.lastName());
+        assertEquals(of(1983, 11, 11), user.birthDay());
 
-        service().unregistersRunner("Honzales");
+        service().unregistersUser("honzales@kolin.cz");
 
         try {
-            service().getRunner("Honzales");
-            throw new AssertionError("Runner Honzales still exists.");
-        }  catch (NoSuchRunnerException exc) {
+            service().getUser("honzales@kolin.cz");
+            throw new AssertionError("User honzales@kolin still exists.");
+        }  catch (NoSuchUserException exc) {
             //expected
         }
     }
-
+/*
     @Test
-    public void insertedRunsForRunnerAreRetrieved() throws RunnerAlreadyExistsException, NoSuchRunnerException {
+    public void insertedRunsForRunnerAreRetrieved() throws UserAlreadyExistsException, NoSuchUserException {
 
         service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
         service().registerRunner("Prdales", "Tonda", "Ponozka", of(2000, 3, 4));
@@ -114,8 +97,8 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
                 .withDuration(ofMinutes(40))));
     }
 
-    @Test(expectedExceptions = {NoSuchRunnerException.class})
-    public void anExceptionIsThrownByQueringRunnerPRopertiesAfterItIsUnregistered() throws RunnerAlreadyExistsException, NoSuchRunnerException {
+    @Test(expectedExceptions = {NoSuchUserException.class})
+    public void anExceptionIsThrownByQueringRunnerPRopertiesAfterItIsUnregistered() throws UserAlreadyExistsException, NoSuchUserException {
 
         service().registerRunner("Honzales", "Jan", "Lastovicka", of(1983, 11, 11));
 
@@ -125,5 +108,5 @@ public class RunnerApplicationTest extends AbstractTestNGSpringContextTests {
         service().unregistersRunner("Honzales");
 
         service().getRuns("Honzales");
-    }
+    }*/
 }

@@ -2,10 +2,10 @@ package cz.jalasoft.runner.unit;
 
 import org.testng.annotations.Test;
 
-import static cz.jalasoft.runner.domain.model.run.Distance.ofKilometers;
-import static cz.jalasoft.runner.domain.model.run.Distance.ofMeters;
-import static cz.jalasoft.runner.domain.model.run.DistanceUnit.KILOMETER;
-import static cz.jalasoft.runner.domain.model.run.DistanceUnit.METER;
+import static cz.jalasoft.myhealth.domain.model.run.Distance.ofKilometers;
+import static cz.jalasoft.myhealth.domain.model.run.Distance.ofMeters;
+import static cz.jalasoft.myhealth.domain.model.run.DistanceUnit.KILOMETER;
+import static cz.jalasoft.myhealth.domain.model.run.DistanceUnit.METER;
 import static org.testng.Assert.assertEquals;
 
 /**

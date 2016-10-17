@@ -1,2 +1,2 @@
-delete from runner;
+delete from user;
 delete from run;

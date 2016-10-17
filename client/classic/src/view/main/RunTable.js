@@ -5,6 +5,7 @@ Ext.define("MyHealth.view.main.RunTable", {
 
    store: myStore, 
    controller: "run",
+   xtype: "runs",
    
    columns: [
       {
