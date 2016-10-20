@@ -1,3 +1,5 @@
+server:
+  port: 8088
 hibernate:
   jdbc:
     driver: org.h2.Driver

@@ -5,6 +5,7 @@ import cz.jalasoft.myhealth.application.exception.NoSuchUserException;
 import cz.jalasoft.myhealth.application.exception.UserAlreadyExistsException;
 import cz.jalasoft.myhealth.domain.model.run.Run;
 import cz.jalasoft.myhealth.domain.model.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class MyHealthEndpoint {
 
     private final MyHealthApplicationService service;
 
+    @Autowired
     public MyHealthEndpoint(MyHealthApplicationService service) {
         this.service = service;
     }
