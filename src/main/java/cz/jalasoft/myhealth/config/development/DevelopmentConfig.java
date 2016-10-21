@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
+import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -16,7 +21,8 @@ import org.springframework.core.io.Resource;
  */
 @Profile("dev")
 @Configuration
-public class DevelopmentConfig {
+@EnableWebMvc
+public class DevelopmentConfig extends WebMvcConfigurerAdapter {
 
     @Value("classpath:init.sql")
     private Resource initScript;
@@ -33,6 +39,20 @@ public class DevelopmentConfig {
         setting.setPoolSize(4);
 
         return setting;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
+
+        String dir = System.getProperty("user.dir");
+        String path = "file:" + dir + "/client/";
+
+       registry.addResourceHandler("/**")
+                .addResourceLocations(path)
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver());
+
     }
 
     @EventListener
